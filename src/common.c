@@ -7,6 +7,10 @@ uint8_t digit(uint16_t d, uint8_t m)
   while (i)
   {
       a = d%10;
-      if(i-- =)
+      if(i-- == m) 
+        break;
+      d /= 10;
   }
+
+  return(a);
 }
