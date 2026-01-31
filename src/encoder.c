@@ -1,5 +1,6 @@
 #include "../inc/encoder.h"
 
+
 void encoderInit(void)
 {
   sei();
