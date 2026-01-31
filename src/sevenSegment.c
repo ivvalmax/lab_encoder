@@ -8,5 +8,24 @@ void sevenSegmentInit(void)
   DDRC |= (1 << PC0) | (1 << PC1) | (1 << PC2) | (1 << PC3) | (1 << PC4) | (1 << PC5) | (1 << PC6);  
 }
 
+void sevenSegmentClear(void)
+{
+  PORTA |= (1 << PA1) | (1<<PA2) | (1 << PA3) | (1 << PA4) | (1 << PA5);
+  PORTC &= ~((1 << PC0) | (1 << PC1) | (1 << PC2) | (1 << PC3) | (1 << PC4) | (1 << PC5) | (1 << PC6));
+  PORTA &= ~((1 << PA1) | (1<<PA2) | (1 << PA3) | (1 << PA4) | (1 << PA5));
+}
 
+void sevenSegmentWrite(Encoder_t *encPtr)
+{
+  uint16_t value = encPtr->position;
+  for(uint8_t i = 5; i >= 1; i--){
+    while((digit(value, 6 - i) == 0) && (i != 1))
+    {
+      PORTC = 0;
+      PORTA |= (1 << i);
+      PORTA &= ~(1 << i);
+      i--;
+    }
 
+  }
+}
