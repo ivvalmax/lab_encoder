@@ -3,6 +3,6 @@
 
 #include "common.h"
 
-
+void encoderInit(void);
 
 #endif
