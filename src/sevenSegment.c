@@ -1,6 +1,6 @@
 #include "../inc/sevenSegment.h"
 
-const uint8_t segments[] = {0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D,0x7D, 0x07, 0x7F, 0x6F, };
+const uint8_t segments[] = {0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D,0x7D, 0x07, 0x7F, 0x6F, 0x40};
 
 void sevenSegmentInit(void)
 {
@@ -22,21 +22,20 @@ void sevenSegmentWrite(Encoder_t *encPtr)
   while((digit(value, i) == 0) && (i != 1))
   {
     PORTC = 0;
-    PORTA |= (1 << (5-i));
-    PORTA &= ~(1 << (5-i));
+    PORTA |= (1 << (6-i));
+    PORTA &= ~(1 << (6-i));
     i--;
+  }
+  if(value < 0)
+  {
+    PORTC = segments[10];
+    PORTA = (1 << (5-i));
+    PORTA &= ~(1 << (5-i));
   }
   for(i; i >= 1; i--)
   {
-    if(value < 0)
-    {
-      
-      PORTA = (1 << (5-i));
-      PORTC = segments[10];
-
-    }
-    PORTC = segments[digit(value, 6-i)];
-    PORTA |= (1 << i);
-    PORTA &= ~(1 << i);
+    PORTC = segments[digit(value, i)];
+    PORTA |= (1 << (6-i));
+    PORTA &= ~(1 << (6-i));
   }
 }

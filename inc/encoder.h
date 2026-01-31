@@ -6,7 +6,6 @@ typedef struct Encoder
 {
   int16_t position;
   uint8_t resolution;
-  int8_t angle;
 } Encoder_t;
 
 void encoderInit(void);

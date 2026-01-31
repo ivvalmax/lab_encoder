@@ -3,7 +3,6 @@
 uint8_t digit(int16_t d, uint8_t m)
 {
   uint8_t i = 5, a;
-
   while (i)
   {
       a = d%10;
@@ -11,6 +10,5 @@ uint8_t digit(int16_t d, uint8_t m)
         break;
       d /= 10;
   }
-
   return(a);
 }

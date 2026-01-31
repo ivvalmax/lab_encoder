@@ -1,10 +1,9 @@
 #include "../inc/encoder.h"
 
-extern Encoder_t encoder;
+Encoder_t encoder = {.position = 0, .resolution = 60};
 
 void encoderInit(void)
 {
-  sei();
   EICRA = (1 << ISC11)|(1 << ISC21);
   EIMSK = (1 << INT1)|(1 << INT2);
 }
