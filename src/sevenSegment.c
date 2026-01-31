@@ -26,6 +26,8 @@ void sevenSegmentWrite(Encoder_t *encPtr)
       PORTA &= ~(1 << i);
       i--;
     }
-
+    PORTC = segments[digit(value, 6-i)];
+    PORTA |= (1 << i);
+    PORTA &= ~(1 << i);
   }
 }

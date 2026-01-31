@@ -1,5 +1,6 @@
 #include "../inc/encoder.h"
 
+extern Encoder_t encoder;
 
 void encoderInit(void)
 {
@@ -8,3 +9,36 @@ void encoderInit(void)
   EIMSK = (1 << INT1)|(1 << INT2);
 }
 
+ISR (INT1_vect)
+{
+  if((PIND & (1 << 1)) != 0)
+  {
+    EICRA |= (1 << ISC10);
+    if((PIND & (1 << 0)) != 0)
+    {
+      encoder.position += 360/encoder.resolution;
+    }
+    else
+    {
+      encoder.position -= 360/encoder.resolution;
+    }
+  }
+  else
+  {
+    EICRA &= ~(1 << ISC10);
+    if((PIND & (1 << 0)) != 0)
+    {
+      encoder.position -= 360/encoder.resolution;
+    }
+    else
+    {
+      encoder.position += 360/encoder.resolution;
+    }      
+  }
+  encoder.position %= 360;
+}
+
+ISR (INT2_vect)
+{
+  encoder.position = 0;
+}
