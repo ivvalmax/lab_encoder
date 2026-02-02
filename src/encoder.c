@@ -1,6 +1,6 @@
 #include "../inc/encoder.h"
 
-Encoder_t encoder = {.position = 0, .resolution = 60};
+Encoder_t encoder = {.position = 0, .resolution = 30};
 
 void encoderInit(void)
 {
@@ -13,25 +13,28 @@ ISR (INT1_vect)
   if((PIND & (1 << 1)) != 0)
   {
     EICRA |= (1 << ISC10);
+  
     if((PIND & (1 << 0)) != 0)
     {
-      encoder.position += 360/encoder.resolution;
+      encoder.position -= 360/encoder.resolution;
     }
     else
     {
-      encoder.position -= 360/encoder.resolution;
+      encoder.position += 360/encoder.resolution;
     }
   }
   else
   {
     EICRA &= ~(1 << ISC10);
+    
+
     if((PIND & (1 << 0)) != 0)
     {
-      encoder.position -= 360/encoder.resolution;
+      encoder.position += 360/encoder.resolution;
     }
     else
     {
-      encoder.position += 360/encoder.resolution;
+      encoder.position -= 360/encoder.resolution;
     }      
   }
   encoder.position %= 360;
@@ -40,4 +43,5 @@ ISR (INT1_vect)
 ISR (INT2_vect)
 {
   encoder.position = 0;
+
 }
