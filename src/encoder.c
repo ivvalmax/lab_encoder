@@ -43,5 +43,4 @@ ISR (INT1_vect)
 ISR (INT2_vect)
 {
   encoder.position = 0;
-
 }
